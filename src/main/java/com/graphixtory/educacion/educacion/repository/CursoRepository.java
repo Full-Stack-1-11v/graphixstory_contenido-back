@@ -19,12 +19,6 @@ public interface CursoRepository extends JpaRepository<Curso, Long>{
     @Query("SELECT c FROM Curso c WHERE c.materia = :materia")
     List<Curso> findByMateria(@Param("materia") String materia);
 
-    @Query("SELECT c FROM Curso c WHERE c.cupos_disponibles = :cuposDisponibles")
-    List<Curso> findByCuposDisponibles(@Param("cupos_disponibles") Integer cupos_disponibles);
-
-    @Query("SELECT c FROM Curso c WHERE c.costo = :costo")
-    List<Curso> findByCosto(@Param("costo") Integer costo);
-
     @Query("SELECT c FROM Curso c WHERE c.fecha_inicio = :fechaInicio")
     List<Curso> findByFechaInicio(@Param("fecha_inicio") Date fecha_inicio);
 

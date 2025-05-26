@@ -28,20 +28,11 @@ public class Curso {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "descripcion", nullable = false)
-    private String descripcion;
-
     @Column(name = "nivel_educativo", nullable = false)
     private Integer nivel_educativo; //preescolar, basica o superior
 
     @Column(name = "materia", nullable = false)
     private String materia;
-
-    @Column(name = "cupos_disponibles", nullable = false)
-    private Integer cupos_disponibles;
-
-    @Column(name = "costo", nullable = false)
-    private Integer costo;
 
     @Column(name = "fecha_inicio", nullable = false)
     private Date fecha_inicio;

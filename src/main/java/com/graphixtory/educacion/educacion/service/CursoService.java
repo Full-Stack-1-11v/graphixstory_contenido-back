@@ -2,64 +2,65 @@ package com.graphixtory.educacion.educacion.service;
 
 import com.graphixtory.educacion.educacion.model.Curso;
 import com.graphixtory.educacion.educacion.repository.CursoRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
-@Transactional
+
 public class CursoService {
 
-    private final CursoRepository cursoRepository; // Hazlo final
+    @Autowired
+    private CursoRepository repo;
 
-    // Inyección por constructor
-    public CursoService(CursoRepository cursoRepository) { // Spring Boot 2.x+ @Autowired es opcional si solo hay un constructor
-        this.cursoRepository = cursoRepository;
+    public Curso crearCurso(Curso curso){
+        return repo.save(curso);
     }
 
-    public List<Curso> findAll(){
-        return cursoRepository.findAll();
+    public List<Curso> listarCursos(){
+        return repo.findAll();
     }
 
-    public Curso findById(long id){
-        return cursoRepository.findById(id).orElse(null);
+    public Optional<Curso> obtenerPorId(long id){
+        return repo.findById(id);
     }
 
-    public Curso save(Curso curso){
-        return cursoRepository.save(curso);
+    public Curso actualizarCurso(Long id, Curso nuevoCurso) {
+        return repo.findById(id).map(cursoExistente -> {
+            cursoExistente.setNombre(nuevoCurso.getNombre());
+
+            cursoExistente.setNivel_educativo(nuevoCurso.getNivel_educativo());
+            cursoExistente.setMateria(nuevoCurso.getMateria());
+            cursoExistente.setFecha_inicio(nuevoCurso.getFecha_inicio());
+            cursoExistente.setFecha_fin(nuevoCurso.getFecha_fin());
+            return repo.save(cursoExistente);
+        }).orElse(null);
     }
 
-    public void delete(long id){
-        cursoRepository.deleteById(id);
+    public void eliminarCurso(long id){
+        repo.deleteById(id);
     }
 
     public List<Curso> buscarPorNombre(String nombre) {
-        return cursoRepository.findByNombre(nombre);
+        return repo.findByNombre(nombre);
     }
 
     public List<Curso> buscarPorNivelEducativo(Integer nivelEducativo) {
-        return cursoRepository.findByNivelEducativo(nivelEducativo);
+        return repo.findByNivelEducativo(nivelEducativo);
     }
 
     public List<Curso> buscarPorMateria(String materia) {
-        return cursoRepository.findByMateria(materia); //
-    }
-
-    public List<Curso> buscarPorCuposDisponibles(Integer cuposDisponibles) {
-        return cursoRepository.findByCuposDisponibles(cuposDisponibles);
-    }
-
-    public List<Curso> buscarPorCosto(Integer costo) {
-        return cursoRepository.findByCosto(costo); //
+        return repo.findByMateria(materia);
     }
 
     public List<Curso> buscarPorFechaInicio(Date fechaInicio) {
-        return cursoRepository.findByFechaInicio(fechaInicio);
+        return repo.findByFechaInicio(fechaInicio);
     }
 
     public List<Curso> buscarPorFechaFin(Date fechaFin) {
-        return cursoRepository.findByFechaFin(fechaFin);
+        return repo.findByFechaFin(fechaFin);
     }
 }

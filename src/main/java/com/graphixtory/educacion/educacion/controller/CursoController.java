@@ -2,8 +2,7 @@ package com.graphixtory.educacion.educacion.controller;
 
 import com.graphixtory.educacion.educacion.model.Curso;
 import com.graphixtory.educacion.educacion.service.CursoService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,125 +14,68 @@ import java.text.ParseException;
 @RequestMapping
 public class CursoController {
 
-    private final CursoService cursoService;
+    @Autowired
+    private CursoService servicio;
 
-
-    public CursoController(CursoService cursoService) {
-        this.cursoService = cursoService;
+    @PostMapping
+    public Curso crear(@RequestBody Curso c) {
+        return servicio.crearCurso(c);
     }
 
     @GetMapping
-    public ResponseEntity<List<Curso>> listarCursos() {
-        List<Curso> cursos = cursoService.findAll();
-        if (cursos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(cursos);
-    }
-
-    @PostMapping
-    public ResponseEntity<Curso> guardarCursos(@RequestBody Curso curso) {
-        Curso savedCurso = cursoService.save(curso);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCurso);
+    public List<Curso> listar() {
+        return servicio.listarCursos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Curso> buscarCursos(@PathVariable Integer id) {
-        try {
-            Curso curso = cursoService.findById(id);
-            if (curso == null){
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(curso);
-        } catch (Exception e) {
+    public Curso obtener(@PathVariable Long id) {
+        return servicio.obtenerPorId(id).orElse(null);
+    }
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    @PutMapping("/{id}")
+    public Curso actualizar(@PathVariable Long id, @RequestBody Curso c) {
+        return servicio.actualizarCurso(id, c);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarCurso(@PathVariable Long id) {
-        try {
-            cursoService.delete(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    public void eliminar(@PathVariable Long id) {
+        servicio.eliminarCurso(id);
     }
 
     @GetMapping("/buscar/nombre/{nombre}")
-    public ResponseEntity<List<Curso>> buscarCursosPorNombre(@PathVariable String nombre) {
-        List<Curso> cursos = cursoService.buscarPorNombre(nombre);
-        if (cursos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(cursos);
+    public List<Curso> buscarPorNombre(@PathVariable String nombre) {
+        return servicio.buscarPorNombre(nombre);
     }
 
     @GetMapping("/buscar/nivelEducativo/{nivelEducativo}")
-    public ResponseEntity<List<Curso>> buscarCursosPorNivelEducativo(@PathVariable Integer nivelEducativo) {
-        List<Curso> cursos = cursoService.buscarPorNivelEducativo(nivelEducativo);
-        if (cursos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(cursos);
+    public List<Curso> buscarPorNivelEducativo(@PathVariable Integer nivelEducativo) {
+        return servicio.buscarPorNivelEducativo(nivelEducativo);
     }
 
     @GetMapping("/buscar/materia/{materia}")
-    public ResponseEntity<List<Curso>> buscarCursosPorMateria(@PathVariable String materia) {
-        List<Curso> cursos = cursoService.buscarPorMateria(materia);
-        if (cursos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(cursos);
-    }
-
-    @GetMapping("/buscar/cuposDisponibles/{cupos}")
-    public ResponseEntity<List<Curso>> buscarCursosPorCuposDisponibles(@PathVariable Integer cupos) {
-        List<Curso> cursos = cursoService.buscarPorCuposDisponibles(cupos);
-        if (cursos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(cursos);
-    }
-
-    @GetMapping("/buscar/costo/{costo}")
-    public ResponseEntity<List<Curso>> buscarCursosPorCosto(@PathVariable Integer costo) {
-        List<Curso> cursos = cursoService.buscarPorCosto(costo);
-        if (cursos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(cursos);
+    public List<Curso> buscarPorMateria(@PathVariable String materia) {
+        return servicio.buscarPorMateria(materia);
     }
 
     @GetMapping("/buscar/fechaInicio/{fechaStr}")
-    public ResponseEntity<List<Curso>> buscarCursosPorFechaInicio(@PathVariable String fechaStr) {
+    public List<Curso> buscarPorFechaInicio(@PathVariable String fechaStr) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date fecha = formatter.parse(fechaStr);
-            List<Curso> cursos = cursoService.buscarPorFechaInicio(fecha);
-            if (cursos.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(cursos);
+            return servicio.buscarPorFechaInicio(fecha);
         } catch (ParseException e) {
-            return ResponseEntity.badRequest().build();
+            return List.of();
         }
     }
 
     @GetMapping("/buscar/fechaFin/{fechaStr}")
-    public ResponseEntity<List<Curso>> buscarCursosPorFechaFin(@PathVariable String fechaStr) {
+    public List<Curso> buscarPorFechaFin(@PathVariable String fechaStr) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date fecha = formatter.parse(fechaStr);
-            List<Curso> cursos = cursoService.buscarPorFechaFin(fecha);
-            if (cursos.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(cursos);
+            return servicio.buscarPorFechaFin(fecha);
         } catch (ParseException e) {
-            return ResponseEntity.badRequest().build();
+            return List.of();
         }
     }
 

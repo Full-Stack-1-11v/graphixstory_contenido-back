@@ -8,72 +8,66 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class MaterialEducativoService {
 
-    private final MaterialEducativoRepository materialEducativoRepository;
-
-
     @Autowired
-    public MaterialEducativoService(MaterialEducativoRepository materialEducativoRepository) {
-        this.materialEducativoRepository = materialEducativoRepository;
+    private MaterialEducativoRepository repo;
+
+    public MaterialEducativo crearMaterialEducativo(MaterialEducativo materialEducativo) {
+        return repo.save(materialEducativo);
     }
 
-    public List<MaterialEducativo> findAll() {
-        return materialEducativoRepository.findAll();
+    public List<MaterialEducativo> listarMaterialesEducativos() {
+        return repo.findAll();
     }
 
-    public MaterialEducativo save(MaterialEducativo materialEducativo) {
-        return materialEducativoRepository.save(materialEducativo);
+    public Optional<MaterialEducativo> obtenerPorId(Long id) {
+        return repo.findById(id);
     }
 
-    public MaterialEducativo findById(Long id) {
-        return materialEducativoRepository.findById(id).orElse(null);
+    public MaterialEducativo actualizarMaterialEducativo(Long id, MaterialEducativo nuevoMaterial) {
+        return repo.findById(id).map(materialExistente -> {
+            materialExistente.setTituloMaterial(nuevoMaterial.getTituloMaterial());
+            materialExistente.setTipoRecurso(nuevoMaterial.getTipoRecurso());
+            materialExistente.setEstadoPublicacion(nuevoMaterial.getEstadoPublicacion());
+            materialExistente.setEstadoMaterial(nuevoMaterial.getEstadoMaterial());
+            materialExistente.setFechaCreacion(nuevoMaterial.getFechaCreacion());
+            materialExistente.setCurso(nuevoMaterial.getCurso()); // ¡Cambiado para usar el objeto Curso!
+
+            return repo.save(materialExistente);
+        }).orElse(null);
     }
 
-    public void delete(Long id) {
-        materialEducativoRepository.deleteById(id);
+    public void eliminarMaterialEducativo(Long id) {
+        repo.deleteById(id);
     }
 
-    public List<MaterialEducativo> buscarPorTituloMaterial(String titulo_material) {
-        return materialEducativoRepository.findByTituloMaterial(titulo_material);
+    public List<MaterialEducativo> buscarPorTituloMaterial(String tituloMaterial) {
+        return repo.findByTituloMaterial(tituloMaterial);
     }
 
-    public List<MaterialEducativo> buscarPorFormatoContenido(String formato_contenido) {
-        return materialEducativoRepository.findByFormatoContenido(formato_contenido);
+    public List<MaterialEducativo> buscarPorTipoRecurso(String tipoRecurso) {
+        return repo.findByTipoRecurso(tipoRecurso);
     }
 
-    public List<MaterialEducativo> buscarPorTipoRecurso(String tipo_recurso) {
-        return materialEducativoRepository.findByTipoRecurso(tipo_recurso);
+    public List<MaterialEducativo> buscarPorEstadoPublicacion(String estadoPublicacion) {
+        return repo.findByEstadoPublicacion(estadoPublicacion);
     }
 
-    public List<MaterialEducativo> buscarPorUrlAccesoRecurso(String url_acceso_recurso) {
-        return materialEducativoRepository.findByUrlAccesoRecurso(url_acceso_recurso);
+    public List<MaterialEducativo> buscarPorEstadoMaterial(String estadoMaterial) {
+        return repo.findByEstadoMaterial(estadoMaterial);
     }
 
-    public List<MaterialEducativo> buscarPorResumenDidactico(String resumen_didactico) {
-        return materialEducativoRepository.findByResumenDidactico(resumen_didactico);
+    public List<MaterialEducativo> buscarPorFechaCreacion(Date fechaCreacion) {
+        return repo.findByFechaCreacion(fechaCreacion);
     }
 
-    public List<MaterialEducativo> buscarPorEstadoPublicacion(String estado_publicacion) {
-        return materialEducativoRepository.findByEstadoPublicacion(estado_publicacion);
-    }
 
-    public List<MaterialEducativo> buscarPorEstadoMaterial(String estado_material) {
-        return materialEducativoRepository.findByEstadoMaterial(estado_material);
-    }
-
-    public List<MaterialEducativo> buscarPorFechaCreacion(Date fecha_creacion) {
-        return materialEducativoRepository.findByFechaCreacion(fecha_creacion);
-    }
-
-    public List<MaterialEducativo> buscarPorFechaUltimaRevision(Date fecha_ultima_revision) {
-        return materialEducativoRepository.findByFechaUltimaRevision(fecha_ultima_revision);
-    }
-
-    public List<MaterialEducativo> buscarPorCursoId(Long curso_id) {
-        return materialEducativoRepository.findByCurso_id(curso_id);
+    public List<MaterialEducativo> buscarPorCursoId(Long cursoId) {
+        return repo.findByCurso_id(cursoId); // Esto mapeará a `material.curso.id` en JPA
     }
 
 }

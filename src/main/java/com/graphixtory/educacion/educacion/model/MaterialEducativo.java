@@ -31,17 +31,8 @@ public class MaterialEducativo {
     @Column(name = "titulo_material", nullable = false)
     private String tituloMaterial;
 
-    @Column(name = "formato_contenido", nullable = false)
-    private String formatoContenido;
-
     @Column(name = "tipo_recurso", nullable = false)
     private String tipoRecurso;
-
-    @Column(name = "url_acceso_recurso", nullable = false)
-    private String urlAccesoRecurso;
-
-    @Column(name = "resumen_didactico", length = 1000)
-    private String resumenDidactico;
 
     @Column(name = "estado_publicacion", nullable = false)
     private String estadoPublicacion;
@@ -52,6 +43,4 @@ public class MaterialEducativo {
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
-    @Column(name = "fecha_ultima_revision")
-    private Date fechaUltimaRevision;
 }
