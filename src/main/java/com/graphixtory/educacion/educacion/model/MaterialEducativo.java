@@ -1,23 +1,18 @@
 package com.graphixtory.educacion.educacion.model;
 
-import jakarta.persistence.*;
 import jakarta.persistence.Column;
-
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
 @Table(name= "material_educativo")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class MaterialEducativo {
 
     @Id
@@ -43,4 +38,72 @@ public class MaterialEducativo {
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
+    public MaterialEducativo() {
+    }
+
+    public MaterialEducativo(Long id, Curso curso, String tituloMaterial, String tipoRecurso, String estadoPublicacion, String estadoMaterial, Date fechaCreacion) {
+        this.id = id;
+        this.curso = curso;
+        this.tituloMaterial = tituloMaterial;
+        this.tipoRecurso = tipoRecurso;
+        this.estadoPublicacion = estadoPublicacion;
+        this.estadoMaterial = estadoMaterial;
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    public String getTituloMaterial() {
+        return tituloMaterial;
+    }
+
+    public void setTituloMaterial(String tituloMaterial) {
+        this.tituloMaterial = tituloMaterial;
+    }
+
+    public String getTipoRecurso() {
+        return tipoRecurso;
+    }
+
+    public void setTipoRecurso(String tipoRecurso) {
+        this.tipoRecurso = tipoRecurso;
+    }
+
+    public String getEstadoPublicacion() {
+        return estadoPublicacion;
+    }
+
+    public void setEstadoPublicacion(String estadoPublicacion) {
+        this.estadoPublicacion = estadoPublicacion;
+    }
+
+    public String getEstadoMaterial() {
+        return estadoMaterial;
+    }
+
+    public void setEstadoMaterial(String estadoMaterial) {
+        this.estadoMaterial = estadoMaterial;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 }

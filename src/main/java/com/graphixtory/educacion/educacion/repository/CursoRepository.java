@@ -14,14 +14,14 @@ public interface CursoRepository extends JpaRepository<Curso, Long>{
     List<Curso> findByNombre(@Param("nombre") String nombre);
 
     @Query("SELECT c FROM Curso c WHERE c.nivel_educativo = :nivelEducativo")
-    List<Curso> findByNivelEducativo(@Param("nivel_educativo") Integer nivel_educativo);
+    List<Curso> findByNivelEducativo(@Param("nivelEducativo") Integer nivel_educativo);
 
     @Query("SELECT c FROM Curso c WHERE c.materia = :materia")
     List<Curso> findByMateria(@Param("materia") String materia);
 
     @Query("SELECT c FROM Curso c WHERE c.fecha_inicio = :fechaInicio")
-    List<Curso> findByFechaInicio(@Param("fecha_inicio") Date fecha_inicio);
+    List<Curso> findByFechaInicio(@Param("fechaInicio") Date fecha_inicio);
 
     @Query("SELECT c FROM Curso c WHERE c.fecha_fin = :fechaFin")
-    List<Curso> findByFechaFin(@Param("fecha_fin") Date fecha_fin);
+    List<Curso> findByFechaFin(@Param("fechaFin") Date fecha_fin);
 }

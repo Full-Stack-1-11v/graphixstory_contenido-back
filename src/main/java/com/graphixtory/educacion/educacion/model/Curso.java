@@ -1,24 +1,16 @@
 package com.graphixtory.educacion.educacion.model;
 
-import jakarta.persistence.*;
 import jakarta.persistence.Column;
-
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
 @Table(name= "curso")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-
 public class Curso {
 
     @Id
@@ -29,7 +21,7 @@ public class Curso {
     private String nombre;
 
     @Column(name = "nivel_educativo", nullable = false)
-    private Integer nivel_educativo; //preescolar, basica o superior
+    private Integer nivel_educativo;
 
     @Column(name = "materia", nullable = false)
     private String materia;
@@ -39,4 +31,64 @@ public class Curso {
 
     @Column(name = "fecha_fin", nullable = false)
     private Date fecha_fin;
+
+    public Curso() {
+    }
+
+    public Curso(Long id, String nombre, Integer nivel_educativo, String materia, Date fecha_inicio, Date fecha_fin) {
+        this.id = id;
+        this.nombre = nombre;
+        this.nivel_educativo = nivel_educativo;
+        this.materia = materia;
+        this.fecha_inicio = fecha_inicio;
+        this.fecha_fin = fecha_fin;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Integer getNivel_educativo() {
+        return nivel_educativo;
+    }
+
+    public void setNivel_educativo(Integer nivel_educativo) {
+        this.nivel_educativo = nivel_educativo;
+    }
+
+    public String getMateria() {
+        return materia;
+    }
+
+    public void setMateria(String materia) {
+        this.materia = materia;
+    }
+
+    public Date getFecha_inicio() {
+        return fecha_inicio;
+    }
+
+    public void setFecha_inicio(Date fecha_inicio) {
+        this.fecha_inicio = fecha_inicio;
+    }
+
+    public Date getFecha_fin() {
+        return fecha_fin;
+    }
+
+    public void setFecha_fin(Date fecha_fin) {
+        this.fecha_fin = fecha_fin;
+    }
 }
