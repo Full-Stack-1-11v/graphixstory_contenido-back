@@ -23,6 +23,9 @@ public class Curso {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
+    @Column(name = "cantidad_alumnos", nullable = false)
+    private String cantidad_alumnos;
+
     @Column(name = "nivel_educativo", nullable = false)
     private Integer nivel_educativo;
 
@@ -44,10 +47,11 @@ public class Curso {
     public Curso() {
     }
 
-    public Curso(Long id, String nombre, String descripcion, Integer nivel_educativo, String materia, Integer costo, Integer cupos_disponibles, Date fecha_inicio, Date fecha_fin) {
+    public Curso(Long id, String nombre, String descripcion, String cantidad_alumnos, Integer nivel_educativo, String materia, Integer costo, Integer cupos_disponibles, Date fecha_inicio, Date fecha_fin) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.cantidad_alumnos = cantidad_alumnos;
         this.nivel_educativo = nivel_educativo;
         this.materia = materia;
         this.cupos_disponibles = cupos_disponibles;
@@ -78,6 +82,14 @@ public class Curso {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getCantidad_alumnos() {
+        return cantidad_alumnos;
+    }
+
+    public void setCantidad_alumnos(String cantidad_alumnos) {
+        this.cantidad_alumnos = cantidad_alumnos;
     }
 
     public Integer getNivel_educativo() {

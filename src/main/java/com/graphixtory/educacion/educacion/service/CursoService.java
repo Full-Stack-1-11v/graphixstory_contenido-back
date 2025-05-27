@@ -32,6 +32,7 @@ public class CursoService {
         return repo.findById(id).map(cursoExistente -> {
             cursoExistente.setNombre(nuevoCurso.getNombre());
             cursoExistente.setDescripcion(nuevoCurso.getDescripcion());
+            cursoExistente.setCantidad_alumnos(nuevoCurso.getCantidad_alumnos());
             cursoExistente.setNivel_educativo(nuevoCurso.getNivel_educativo());
             cursoExistente.setMateria(nuevoCurso.getMateria());
             cursoExistente.setCupos_disponibles(nuevoCurso.getCupos_disponibles());
@@ -52,6 +53,10 @@ public class CursoService {
 
     public List<Curso> buscarPorDescripcion(String descripcion) {
         return repo.findByDescripcion(descripcion);
+    }
+
+    public List<Curso> buscarPorCantidadAlumnos(Integer cantidadAlumnos) {
+        return repo.findByCantidadAlumnos(cantidadAlumnos);
     }
 
     public List<Curso> buscarPorNivelEducativo(Integer nivelEducativo) {

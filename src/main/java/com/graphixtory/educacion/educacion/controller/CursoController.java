@@ -52,6 +52,11 @@ public class CursoController {
         return servicio.buscarPorDescripcion(descripcion);
     }
 
+    @GetMapping("/buscar/cantidadAlumnos/{cantidadAlumnos}")
+    public List<Curso> buscarPorCantidadAlumnos(@PathVariable Integer cantidadAlumnos) {
+        return servicio.buscarPorCantidadAlumnos(cantidadAlumnos);
+    }
+
     @GetMapping("/buscar/nivelEducativo/{nivelEducativo}")
     public List<Curso> buscarPorNivelEducativo(@PathVariable Integer nivelEducativo) {
         return servicio.buscarPorNivelEducativo(nivelEducativo);
