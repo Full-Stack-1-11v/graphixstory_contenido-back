@@ -57,6 +57,9 @@ public class CursoController {
         return servicio.buscarPorMateria(materia);
     }
 
+    @GetMapping("/buscar/costo/{costo}")
+    public List<Curso> buscarPorCosto(@PathVariable Integer costo){ return servicio.buscarPorCosto(costo);}
+
     @GetMapping("/buscar/fechaInicio/{fechaStr}")
     public List<Curso> buscarPorFechaInicio(@PathVariable String fechaStr) {
         try {

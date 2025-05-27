@@ -34,6 +34,7 @@ public class CursoService {
 
             cursoExistente.setNivel_educativo(nuevoCurso.getNivel_educativo());
             cursoExistente.setMateria(nuevoCurso.getMateria());
+            cursoExistente.setCosto(nuevoCurso.getCosto());
             cursoExistente.setFecha_inicio(nuevoCurso.getFecha_inicio());
             cursoExistente.setFecha_fin(nuevoCurso.getFecha_fin());
             return repo.save(cursoExistente);
@@ -55,6 +56,8 @@ public class CursoService {
     public List<Curso> buscarPorMateria(String materia) {
         return repo.findByMateria(materia);
     }
+
+    public List<Curso> buscarPorCosto(Integer costo) { return repo.findByCosto(costo);}
 
     public List<Curso> buscarPorFechaInicio(Date fechaInicio) {
         return repo.findByFechaInicio(fechaInicio);
