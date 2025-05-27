@@ -31,12 +31,8 @@ public class CursoService {
     public Curso actualizarCurso(Long id, Curso nuevoCurso) {
         return repo.findById(id).map(cursoExistente -> {
             cursoExistente.setNombre(nuevoCurso.getNombre());
-            cursoExistente.setDescripcion(nuevoCurso.getDescripcion());
-            cursoExistente.setCantidad_alumnos(nuevoCurso.getCantidad_alumnos());
             cursoExistente.setNivel_educativo(nuevoCurso.getNivel_educativo());
             cursoExistente.setMateria(nuevoCurso.getMateria());
-            cursoExistente.setCupos_disponibles(nuevoCurso.getCupos_disponibles());
-            cursoExistente.setCosto(nuevoCurso.getCosto());
             cursoExistente.setFecha_inicio(nuevoCurso.getFecha_inicio());
             cursoExistente.setFecha_fin(nuevoCurso.getFecha_fin());
             return repo.save(cursoExistente);
@@ -51,25 +47,12 @@ public class CursoService {
         return repo.findByNombre(nombre);
     }
 
-    public List<Curso> buscarPorDescripcion(String descripcion) {
-        return repo.findByDescripcion(descripcion);
-    }
-
-    public List<Curso> buscarPorCantidadAlumnos(Integer cantidadAlumnos) {
-        return repo.findByCantidadAlumnos(cantidadAlumnos);
-    }
-
     public List<Curso> buscarPorNivelEducativo(Integer nivelEducativo) {
         return repo.findByNivelEducativo(nivelEducativo);
     }
-
     public List<Curso> buscarPorMateria(String materia) {
         return repo.findByMateria(materia);
     }
-
-    public List<Curso> buscarPorCuposDisponibles(Integer cuposDisponibles){ return repo.findByCuposDisponibles(cuposDisponibles);}
-
-    public List<Curso> buscarPorCosto(Integer costo) { return repo.findByCosto(costo);}
 
     public List<Curso> buscarPorFechaInicio(Date fechaInicio) {
         return repo.findByFechaInicio(fechaInicio);

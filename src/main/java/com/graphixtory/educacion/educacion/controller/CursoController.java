@@ -47,16 +47,6 @@ public class CursoController {
         return servicio.buscarPorNombre(nombre);
     }
 
-    @GetMapping("/buscar/descripcion/{descripcion}")
-    public List<Curso> buscarPorDescripcion(@PathVariable String descripcion) {
-        return servicio.buscarPorDescripcion(descripcion);
-    }
-
-    @GetMapping("/buscar/cantidadAlumnos/{cantidadAlumnos}")
-    public List<Curso> buscarPorCantidadAlumnos(@PathVariable Integer cantidadAlumnos) {
-        return servicio.buscarPorCantidadAlumnos(cantidadAlumnos);
-    }
-
     @GetMapping("/buscar/nivelEducativo/{nivelEducativo}")
     public List<Curso> buscarPorNivelEducativo(@PathVariable Integer nivelEducativo) {
         return servicio.buscarPorNivelEducativo(nivelEducativo);
@@ -66,12 +56,6 @@ public class CursoController {
     public List<Curso> buscarPorMateria(@PathVariable String materia) {
         return servicio.buscarPorMateria(materia);
     }
-
-    @GetMapping("/buscar/costo/{cuposDisponibles}")
-    public List<Curso> buscarPorCuposDisponibles(@PathVariable Integer cuposDisponibles) { return servicio.buscarPorCuposDisponibles(cuposDisponibles);}
-
-    @GetMapping("/buscar/costo/{costo}")
-    public List<Curso> buscarPorCosto(@PathVariable Integer costo){ return servicio.buscarPorCosto(costo);}
 
     @GetMapping("/buscar/fechaInicio/{fechaStr}")
     public List<Curso> buscarPorFechaInicio(@PathVariable String fechaStr) {

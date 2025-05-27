@@ -20,23 +20,11 @@ public class Curso {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "descripcion", nullable = false)
-    private String descripcion;
-
-    @Column(name = "cantidad_alumnos", nullable = false)
-    private String cantidad_alumnos;
-
     @Column(name = "nivel_educativo", nullable = false)
     private Integer nivel_educativo;
 
     @Column(name = "materia", nullable = false)
     private String materia;
-
-    @Column(name = "cupos_disponibles", nullable = false)
-    private Integer cupos_disponibles;
-
-    @Column(name = "costo", nullable = false)
-    private Integer costo;
 
     @Column(name = "fecha_inicio", nullable = false)
     private Date fecha_inicio;
@@ -47,15 +35,11 @@ public class Curso {
     public Curso() {
     }
 
-    public Curso(Long id, String nombre, String descripcion, String cantidad_alumnos, Integer nivel_educativo, String materia, Integer costo, Integer cupos_disponibles, Date fecha_inicio, Date fecha_fin) {
+    public Curso(Long id, String nombre, Integer nivel_educativo, String materia, Date fecha_inicio, Date fecha_fin) {
         this.id = id;
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.cantidad_alumnos = cantidad_alumnos;
         this.nivel_educativo = nivel_educativo;
         this.materia = materia;
-        this.cupos_disponibles = cupos_disponibles;
-        this.costo = costo;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
     }
@@ -76,21 +60,6 @@ public class Curso {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getCantidad_alumnos() {
-        return cantidad_alumnos;
-    }
-
-    public void setCantidad_alumnos(String cantidad_alumnos) {
-        this.cantidad_alumnos = cantidad_alumnos;
-    }
 
     public Integer getNivel_educativo() {
         return nivel_educativo;
@@ -107,17 +76,6 @@ public class Curso {
         this.materia = materia;
     }
 
-    public void setCosto(Integer costo){
-        this.costo = costo;
-    }
-
-    public Integer getCosto(){
-        return costo;
-    }
-
-    public void setCupos_disponibles(Integer cupos_disponibles){ this.cupos_disponibles = cupos_disponibles;}
-
-    public Integer getCupos_disponibles() { return cupos_disponibles;}
 
     public Date getFecha_inicio() {
         return fecha_inicio;
