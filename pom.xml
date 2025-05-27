@@ -6,7 +6,9 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.5</version> <relativePath/> </parent>
-	<groupId>com.graphixtory.educacion</groupId> <artifactId>educacion</artifactId> <version>0.0.1-SNAPSHOT</version>
+	<groupId>com.graphixtory.educacion</groupId>
+	<artifactId>educacion</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>educacion</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
