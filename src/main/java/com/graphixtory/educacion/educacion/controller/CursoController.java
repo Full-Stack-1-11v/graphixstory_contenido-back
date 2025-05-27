@@ -47,6 +47,11 @@ public class CursoController {
         return servicio.buscarPorNombre(nombre);
     }
 
+    @GetMapping("/buscar/descripcion/{descripcion}")
+    public List<Curso> buscarPorDescripcion(@PathVariable String descripcion) {
+        return servicio.buscarPorDescripcion(descripcion);
+    }
+
     @GetMapping("/buscar/nivelEducativo/{nivelEducativo}")
     public List<Curso> buscarPorNivelEducativo(@PathVariable Integer nivelEducativo) {
         return servicio.buscarPorNivelEducativo(nivelEducativo);

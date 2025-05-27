@@ -31,7 +31,7 @@ public class CursoService {
     public Curso actualizarCurso(Long id, Curso nuevoCurso) {
         return repo.findById(id).map(cursoExistente -> {
             cursoExistente.setNombre(nuevoCurso.getNombre());
-
+            cursoExistente.setDescripcion(nuevoCurso.getDescripcion());
             cursoExistente.setNivel_educativo(nuevoCurso.getNivel_educativo());
             cursoExistente.setMateria(nuevoCurso.getMateria());
             cursoExistente.setCupos_disponibles(nuevoCurso.getCupos_disponibles());
@@ -48,6 +48,10 @@ public class CursoService {
 
     public List<Curso> buscarPorNombre(String nombre) {
         return repo.findByNombre(nombre);
+    }
+
+    public List<Curso> buscarPorDescripcion(String descripcion) {
+        return repo.findByDescripcion(descripcion);
     }
 
     public List<Curso> buscarPorNivelEducativo(Integer nivelEducativo) {
