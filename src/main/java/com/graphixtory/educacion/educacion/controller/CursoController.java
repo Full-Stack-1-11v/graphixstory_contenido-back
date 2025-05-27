@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/cursos")
 public class CursoController {
 
     @Autowired
