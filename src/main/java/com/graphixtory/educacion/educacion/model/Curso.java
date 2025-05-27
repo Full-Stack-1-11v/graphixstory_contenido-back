@@ -26,6 +26,9 @@ public class Curso {
     @Column(name = "materia", nullable = false)
     private String materia;
 
+    @Column(name = "cupos_disponibles", nullable = false)
+    private Integer cupos_disponibles;
+
     @Column(name = "costo", nullable = false)
     private Integer costo;
 
@@ -38,11 +41,12 @@ public class Curso {
     public Curso() {
     }
 
-    public Curso(Long id, String nombre, Integer nivel_educativo, String materia, Integer costo, Date fecha_inicio, Date fecha_fin) {
+    public Curso(Long id, String nombre, Integer nivel_educativo, String materia, Integer costo, Integer cupos_disponibles, Date fecha_inicio, Date fecha_fin) {
         this.id = id;
         this.nombre = nombre;
         this.nivel_educativo = nivel_educativo;
         this.materia = materia;
+        this.cupos_disponibles = cupos_disponibles;
         this.costo = costo;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
@@ -68,8 +72,7 @@ public class Curso {
         return nivel_educativo;
     }
 
-    public void setNivel_educativo(Integer nivel_educativo) {
-        this.nivel_educativo = nivel_educativo;
+    public void setNivel_educativo(Integer nivel_educativo) { this.nivel_educativo = nivel_educativo;
     }
 
     public String getMateria() {
@@ -87,6 +90,10 @@ public class Curso {
     public Integer getCosto(){
         return costo;
     }
+
+    public void setCupos_disponibles(Integer cupos_disponibles){ this.cupos_disponibles = cupos_disponibles;}
+
+    public Integer getCupos_disponibles() { return cupos_disponibles;}
 
     public Date getFecha_inicio() {
         return fecha_inicio;
