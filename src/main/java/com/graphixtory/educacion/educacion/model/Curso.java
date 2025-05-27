@@ -11,6 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name= "curso")
+
 public class Curso {
 
     @Id
