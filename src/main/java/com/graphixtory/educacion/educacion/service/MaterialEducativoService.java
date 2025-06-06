@@ -35,7 +35,7 @@ public class MaterialEducativoService {
             materialExistente.setEstadoPublicacion(nuevoMaterial.getEstadoPublicacion());
             materialExistente.setEstadoMaterial(nuevoMaterial.getEstadoMaterial());
             materialExistente.setFechaCreacion(nuevoMaterial.getFechaCreacion());
-            materialExistente.setCurso(nuevoMaterial.getCurso()); // ¡Cambiado para usar el objeto Curso!
+            materialExistente.setContenido(nuevoMaterial.getContenido());
 
             return repo.save(materialExistente);
         }).orElse(null);
@@ -66,8 +66,8 @@ public class MaterialEducativoService {
     }
 
 
-    public List<MaterialEducativo> buscarPorCursoId(Long cursoId) {
-        return repo.findByCurso_id(cursoId); // Esto mapeará a `material.curso.id` en JPA
+    public List<MaterialEducativo> buscarPorContenidoId(Long contenidoId) {
+        return repo.findByContenido_id(contenidoId); // Esto mapeará a `material.curso.id` en JPA
     }
 
 }

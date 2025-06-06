@@ -20,8 +20,8 @@ public class MaterialEducativo {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "curso_id", nullable = false)
-    private Curso curso;
+    @JoinColumn(name = "contenido_id", nullable = false)
+    private Contenido contenido;
 
     @Column(name = "titulo_material", nullable = false)
     private String tituloMaterial;
@@ -41,9 +41,9 @@ public class MaterialEducativo {
     public MaterialEducativo() {
     }
 
-    public MaterialEducativo(Long id, Curso curso, String tituloMaterial, String tipoRecurso, String estadoPublicacion, String estadoMaterial, Date fechaCreacion) {
+    public MaterialEducativo(Long id, Contenido contenido, String tituloMaterial, String tipoRecurso, String estadoPublicacion, String estadoMaterial, Date fechaCreacion) {
         this.id = id;
-        this.curso = curso;
+        this.contenido = contenido;
         this.tituloMaterial = tituloMaterial;
         this.tipoRecurso = tipoRecurso;
         this.estadoPublicacion = estadoPublicacion;
@@ -59,12 +59,12 @@ public class MaterialEducativo {
         this.id = id;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public Contenido getContenido() {
+        return contenido;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setCurso(Contenido contenido) {
+        this.contenido = contenido;
     }
 
     public String getTituloMaterial() {

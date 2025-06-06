@@ -4,9 +4,6 @@ import com.graphixtory.educacion.educacion.model.MaterialEducativo;
 import com.graphixtory.educacion.educacion.service.MaterialEducativoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 
 import java.util.List;
 import java.util.Date;
@@ -45,9 +42,9 @@ public class MaterialEducativoController {
         servicio.eliminarMaterialEducativo(id);
     }
 
-    @GetMapping("/buscar/curso/{cursoId}")
-    public List<MaterialEducativo> buscarPorCursoId(@PathVariable Long cursoId) {
-        return servicio.buscarPorCursoId(cursoId);
+    @GetMapping("/buscar/contenido/{contenidoId}")
+    public List<MaterialEducativo> buscarPorCursoId(@PathVariable Long contenidoId) {
+        return servicio.buscarPorContenidoId(contenidoId);
     }
 
     @GetMapping("/buscar/titulo/{tituloMaterial}")

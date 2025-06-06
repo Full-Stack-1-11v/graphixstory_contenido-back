@@ -12,8 +12,8 @@ import java.util.Date;
 
 public interface MaterialEducativoRepository extends JpaRepository<MaterialEducativo, Long> {
 
-    @Query("SELECT m FROM MaterialEducativo m WHERE m.curso.id =:curso_id")
-    List<MaterialEducativo> findByCurso_id(@Param("curso_id") Long curso_id);
+    @Query("SELECT m FROM MaterialEducativo m WHERE m.contenido.id =:contenido_id")
+    List<MaterialEducativo> findByContenido_id(@Param("contenido_id") Long contenido_id);
 
     @Query("SELECT m FROM MaterialEducativo m WHERE m.tituloMaterial =:titulo_material")
     List<MaterialEducativo> findByTituloMaterial(@Param("titulo_material") String titulo_material);

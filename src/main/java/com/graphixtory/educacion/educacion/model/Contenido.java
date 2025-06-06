@@ -10,8 +10,8 @@ import jakarta.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name= "curso")
-public class Curso {
+@Table(name= "contenido")
+public class Contenido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +32,10 @@ public class Curso {
     @Column(name = "fecha_fin", nullable = false)
     private Date fecha_fin;
 
-    public Curso() {
+    public Contenido() {
     }
 
-    public Curso(Long id, String nombre, Integer nivel_educativo, String materia, Date fecha_inicio, Date fecha_fin) {
+    public Contenido(Long id, String nombre, Integer nivel_educativo, String materia, Date fecha_inicio, Date fecha_fin) {
         this.id = id;
         this.nombre = nombre;
         this.nivel_educativo = nivel_educativo;
