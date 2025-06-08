@@ -14,7 +14,7 @@ public interface ContenidoRepository extends JpaRepository<Contenido, Long>{
     List<Contenido> findByNombre(@Param("nombre") String nombre);
 
     @Query("SELECT c FROM Contenido c WHERE c.nivel_educativo = :nivelEducativo")
-    List<Contenido> findByNivelEducativo(@Param("nivelEducativo") Integer nivel_educativo);
+    List<Contenido> findByNivelEducativo(@Param("nivelEducativo") String nivel_educativo);
 
     @Query("SELECT c FROM Contenido c WHERE c.materia = :materia")
     List<Contenido> findByMateria(@Param("materia") String materia);

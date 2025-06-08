@@ -48,7 +48,7 @@ public class ContenidoController {
     }
 
     @GetMapping("/buscar/nivelEducativo/{nivelEducativo}")
-    public List<Contenido> buscarPorNivelEducativo(@PathVariable Integer nivelEducativo) {
+    public List<Contenido> buscarPorNivelEducativo(@PathVariable String nivelEducativo) {
         return servicio.buscarPorNivelEducativo(nivelEducativo);
     }
 

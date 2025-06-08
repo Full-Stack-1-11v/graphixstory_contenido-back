@@ -47,7 +47,7 @@ public class ContenidoService {
         return repo.findByNombre(nombre);
     }
 
-    public List<Contenido> buscarPorNivelEducativo(Integer nivelEducativo) {
+    public List<Contenido> buscarPorNivelEducativo(String nivelEducativo) {
         return repo.findByNivelEducativo(nivelEducativo);
     }
     public List<Contenido> buscarPorMateria(String materia) {

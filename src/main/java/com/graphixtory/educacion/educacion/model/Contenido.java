@@ -21,7 +21,7 @@ public class Contenido {
     private String nombre;
 
     @Column(name = "nivel_educativo", nullable = false)
-    private Integer nivel_educativo;
+    private String nivel_educativo;
 
     @Column(name = "materia", nullable = false)
     private String materia;
@@ -35,7 +35,7 @@ public class Contenido {
     public Contenido() {
     }
 
-    public Contenido(Long id, String nombre, Integer nivel_educativo, String materia, Date fecha_inicio, Date fecha_fin) {
+    public Contenido(Long id, String nombre, String nivel_educativo, String materia, Date fecha_inicio, Date fecha_fin) {
         this.id = id;
         this.nombre = nombre;
         this.nivel_educativo = nivel_educativo;
@@ -61,11 +61,11 @@ public class Contenido {
     }
 
 
-    public Integer getNivel_educativo() {
+    public String getNivel_educativo() {
         return nivel_educativo;
     }
 
-    public void setNivel_educativo(Integer nivel_educativo) { this.nivel_educativo = nivel_educativo;
+    public void setNivel_educativo(String nivel_educativo) { this.nivel_educativo = nivel_educativo;
     }
 
     public String getMateria() {
