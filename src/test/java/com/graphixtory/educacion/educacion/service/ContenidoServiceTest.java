@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.graphixtory.educacion.educacion.model.Contenido;
 import com.graphixtory.educacion.educacion.repository.ContenidoRepository;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.Date;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class ContenidoServiceTest {
 
     @Autowired
