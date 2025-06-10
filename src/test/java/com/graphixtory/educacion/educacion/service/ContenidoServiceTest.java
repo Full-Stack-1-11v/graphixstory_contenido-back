@@ -12,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.graphixtory.educacion.educacion.model.Contenido;
 import com.graphixtory.educacion.educacion.repository.ContenidoRepository;
-import com.graphixtory.educacion.educacion.service.ContenidoService;
 
 import java.util.List;
 import java.util.Optional;
