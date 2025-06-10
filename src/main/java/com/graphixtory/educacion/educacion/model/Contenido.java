@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name= "contenido")
@@ -27,15 +27,15 @@ public class Contenido {
     private String materia;
 
     @Column(name = "fecha_inicio", nullable = false)
-    private Date fecha_inicio;
+    private LocalDateTime fecha_inicio;
 
     @Column(name = "fecha_fin", nullable = false)
-    private Date fecha_fin;
+    private LocalDateTime fecha_fin;
 
     public Contenido() {
     }
 
-    public Contenido(Long id, String nombre, String nivel_educativo, String materia, Date fecha_inicio, Date fecha_fin) {
+    public Contenido(Long id, String nombre, String nivel_educativo, String materia, LocalDateTime fecha_inicio, LocalDateTime fecha_fin) {
         this.id = id;
         this.nombre = nombre;
         this.nivel_educativo = nivel_educativo;
@@ -77,19 +77,19 @@ public class Contenido {
     }
 
 
-    public Date getFecha_inicio() {
+    public LocalDateTime getFecha_inicio() {
         return fecha_inicio;
     }
 
-    public void setFecha_inicio(Date fecha_inicio) {
+    public void setFecha_inicio(LocalDateTime fecha_inicio) {
         this.fecha_inicio = fecha_inicio;
     }
 
-    public Date getFecha_fin() {
+    public LocalDateTime getFecha_fin() {
         return fecha_fin;
     }
 
-    public void setFecha_fin(Date fecha_fin) {
+    public void setFecha_fin(LocalDateTime fecha_fin) {
         this.fecha_fin = fecha_fin;
     }
 }

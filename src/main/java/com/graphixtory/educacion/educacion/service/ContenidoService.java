@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -54,11 +54,11 @@ public class ContenidoService {
         return repo.findByMateria(materia);
     }
 
-    public List<Contenido> buscarPorFechaInicio(Date fechaInicio) {
+    public List<Contenido> buscarPorFechaInicio(LocalDateTime fechaInicio) {
         return repo.findByFechaInicio(fechaInicio);
     }
 
-    public List<Contenido> buscarPorFechaFin(Date fechaFin) {
+    public List<Contenido> buscarPorFechaFin(LocalDateTime fechaFin) {
         return repo.findByFechaFin(fechaFin);
     }
 }

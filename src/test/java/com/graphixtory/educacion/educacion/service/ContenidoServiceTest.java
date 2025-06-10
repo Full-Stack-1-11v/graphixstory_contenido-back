@@ -14,13 +14,12 @@ import org.springframework.test.context.ActiveProfiles;
 import com.graphixtory.educacion.educacion.model.Contenido;
 import com.graphixtory.educacion.educacion.repository.ContenidoRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.util.Date;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -34,7 +33,7 @@ public class ContenidoServiceTest {
 
     @Test
     public void testListarContenidos(){
-        when(contenidoRepository.findAll()).thenReturn(List.of(new Contenido(2L, "Matemática Avanzada", "Nivel Básico", "Álgebra", new Date(), new Date())));
+        when(contenidoRepository.findAll()).thenReturn(List.of(new Contenido(2L, "Matemática Avanzada", "Nivel Básico", "Álgebra", LocalDateTime.now(), LocalDateTime.now())));
 
         List<Contenido> contenidos = contenidoService.listarContenidos();
 
@@ -45,7 +44,7 @@ public class ContenidoServiceTest {
     @Test
     public void testObtenerPorId(){
         long id = 1;
-        Contenido contenido = new Contenido(id, "Programación Java", "Nivel Superior", "Informatica", new Date(), new Date());
+        Contenido contenido = new Contenido(id, "Programación Java", "Nivel Superior", "Informatica", LocalDateTime.now(), LocalDateTime.now());
 
         when(contenidoRepository.findById(id)).thenReturn(Optional.of(contenido));
 
@@ -58,7 +57,7 @@ public class ContenidoServiceTest {
     @Test
     public void testCrearContenido(){
 
-        Contenido contenido = new Contenido(2L, "Formación Ciudadana", "Nivel Básico", "Historia", new Date(), new Date());
+        Contenido contenido = new Contenido(2L, "Formación Ciudadana", "Nivel Básico", "Historia", LocalDateTime.now(), LocalDateTime.now());
 
         when(contenidoRepository.save(contenido)).thenReturn(contenido);
 

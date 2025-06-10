@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @RestController
 @RequestMapping("/api/contenidos")
@@ -60,10 +61,10 @@ public class ContenidoController {
     @GetMapping("/buscar/fechaInicio/{fechaStr}")
     public List<Contenido> buscarPorFechaInicio(@PathVariable String fechaStr) {
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date fecha = formatter.parse(fechaStr);
+            LocalDate fechaSolo = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDateTime fecha = fechaSolo.atStartOfDay();
             return servicio.buscarPorFechaInicio(fecha);
-        } catch (ParseException e) {
+        } catch (DateTimeParseException e) {
             return List.of();
         }
     }
@@ -71,12 +72,11 @@ public class ContenidoController {
     @GetMapping("/buscar/fechaFin/{fechaStr}")
     public List<Contenido> buscarPorFechaFin(@PathVariable String fechaStr) {
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date fecha = formatter.parse(fechaStr);
+            LocalDate fechaSolo = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDateTime fecha = fechaSolo.atTime(23, 59, 59);
             return servicio.buscarPorFechaFin(fecha);
-        } catch (ParseException e) {
+        } catch (DateTimeParseException e) {
             return List.of();
         }
     }
-
 }

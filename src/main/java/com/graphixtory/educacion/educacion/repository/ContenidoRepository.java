@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ContenidoRepository extends JpaRepository<Contenido, Long>{
@@ -20,8 +20,8 @@ public interface ContenidoRepository extends JpaRepository<Contenido, Long>{
     List<Contenido> findByMateria(@Param("materia") String materia);
 
     @Query("SELECT c FROM Contenido c WHERE c.fecha_inicio = :fechaInicio")
-    List<Contenido> findByFechaInicio(@Param("fechaInicio") Date fecha_inicio);
+    List<Contenido> findByFechaInicio(@Param("fechaInicio") LocalDateTime fecha_inicio);
 
     @Query("SELECT c FROM Contenido c WHERE c.fecha_fin = :fechaFin")
-    List<Contenido> findByFechaFin(@Param("fechaFin") Date fecha_fin);
+    List<Contenido> findByFechaFin(@Param("fechaFin") LocalDateTime fecha_fin);
 }
