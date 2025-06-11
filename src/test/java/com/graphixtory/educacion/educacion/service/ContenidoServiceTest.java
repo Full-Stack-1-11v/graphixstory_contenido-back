@@ -100,71 +100,73 @@ public class ContenidoServiceTest {
 
     @Test
     public void testBuscarPorNombre() {
-        String nombre = "Historia";
-        List<Contenido> contenidos = List.of(new Contenido(1L, "Historia General", "Secundaria", "Historia", LocalDateTime.now(), LocalDateTime.now()));
-        when(contenidoRepository.findByNombre(nombre)).thenReturn(contenidos);
+        String nombreBuscado = "Matemática Avanzada";
+        List<Contenido> contenidos = List.of(new Contenido(2L, "Matemática Avanzada", "Nivel Básico", "Álgebra", LocalDateTime.now(), LocalDateTime.now()));
+        when(contenidoRepository.findByNombre(nombreBuscado)).thenReturn(contenidos);
 
-        List<Contenido> found = contenidoService.buscarPorNombre(nombre);
+        List<Contenido> found = contenidoService.buscarPorNombre(nombreBuscado);
 
         assertNotNull(found);
         assertEquals(1, found.size());
-        assertEquals("Historia General", found.get(0).getNombre());
-        verify(contenidoRepository, times(1)).findByNombre(nombre);
+        assertEquals(nombreBuscado, found.get(0).getNombre());
+        verify(contenidoRepository, times(1)).findByNombre(nombreBuscado);
     }
 
     @Test
     public void testBuscarPorNivelEducativo() {
-        String nivel = "Primaria";
-        List<Contenido> contenidos = List.of(new Contenido(1L, "Matematicas", "Primaria", "Matematicas", LocalDateTime.now(), LocalDateTime.now()));
-        when(contenidoRepository.findByNivelEducativo(nivel)).thenReturn(contenidos);
+        String nivelBuscado = "Nivel Básico";
+        List<Contenido> contenidos = List.of(new Contenido(2L, "Formación Ciudadana", "Nivel Básico", "Historia", LocalDateTime.now(), LocalDateTime.now()));
+        when(contenidoRepository.findByNivelEducativo(nivelBuscado)).thenReturn(contenidos);
 
-        List<Contenido> found = contenidoService.buscarPorNivelEducativo(nivel);
+        List<Contenido> found = contenidoService.buscarPorNivelEducativo(nivelBuscado);
 
         assertNotNull(found);
         assertEquals(1, found.size());
-        assertEquals("Primaria", found.get(0).getNivel_educativo());
-        verify(contenidoRepository, times(1)).findByNivelEducativo(nivel);
+        assertEquals(nivelBuscado, found.get(0).getNivel_educativo());
+        verify(contenidoRepository, times(1)).findByNivelEducativo(nivelBuscado);
     }
 
     @Test
     public void testBuscarPorMateria() {
-        String materia = "Ciencias";
-        List<Contenido> contenidos = List.of(new Contenido(1L, "Biologia", "Secundaria", "Ciencias", LocalDateTime.now(), LocalDateTime.now()));
-        when(contenidoRepository.findByMateria(materia)).thenReturn(contenidos);
+        String materiaBuscada = "Informatica";
+        List<Contenido> contenidos = List.of(new Contenido(1L, "Programación Java", "Nivel Superior", "Informatica", LocalDateTime.now(), LocalDateTime.now()));
+        when(contenidoRepository.findByMateria(materiaBuscada)).thenReturn(contenidos);
 
-        List<Contenido> found = contenidoService.buscarPorMateria(materia);
+        List<Contenido> found = contenidoService.buscarPorMateria(materiaBuscada);
 
         assertNotNull(found);
         assertEquals(1, found.size());
-        assertEquals("Ciencias", found.get(0).getMateria());
-        verify(contenidoRepository, times(1)).findByMateria(materia);
+        assertEquals(materiaBuscada, found.get(0).getMateria());
+        verify(contenidoRepository, times(1)).findByMateria(materiaBuscada);
     }
 
     @Test
     public void testBuscarPorFechaInicio() {
-        LocalDateTime fecha = LocalDateTime.now();
-        List<Contenido> contenidos = List.of(new Contenido(1L, "Evento", "General", "Arte", fecha, fecha.plusDays(5)));
-        when(contenidoRepository.findByFechaInicio(fecha)).thenReturn(contenidos);
+        LocalDateTime fechaBuscada = LocalDateTime.now().minusDays(5);
+        List<Contenido> contenidos = List.of(new Contenido(3L, "Taller de Pruebas", "Nivel Básico", "Software", fechaBuscada, fechaBuscada.plusDays(2)));
+        when(contenidoRepository.findByFechaInicio(fechaBuscada)).thenReturn(contenidos);
 
-        List<Contenido> found = contenidoService.buscarPorFechaInicio(fecha);
+        List<Contenido> found = contenidoService.buscarPorFechaInicio(fechaBuscada);
 
         assertNotNull(found);
         assertEquals(1, found.size());
-        assertEquals("Evento", found.get(0).getNombre());
-        verify(contenidoRepository, times(1)).findByFechaInicio(fecha);
+        assertEquals("Taller de Pruebas", found.get(0).getNombre());
+        assertEquals(fechaBuscada, found.get(0).getFecha_inicio());
+        verify(contenidoRepository, times(1)).findByFechaInicio(fechaBuscada);
     }
 
     @Test
     public void testBuscarPorFechaFin() {
-        LocalDateTime fecha = LocalDateTime.now().plusDays(10);
-        List<Contenido> contenidos = List.of(new Contenido(1L, "Conferencia", "Universidad", "Tecnologia", fecha.minusDays(5), fecha));
-        when(contenidoRepository.findByFechaFin(fecha)).thenReturn(contenidos);
+        LocalDateTime fechaBuscada = LocalDateTime.now().plusDays(10);
+        List<Contenido> contenidos = List.of(new Contenido(4L, "Seminario Final", "Nivel Superior", "Investigación", fechaBuscada.minusDays(3), fechaBuscada));
+        when(contenidoRepository.findByFechaFin(fechaBuscada)).thenReturn(contenidos);
 
-        List<Contenido> found = contenidoService.buscarPorFechaFin(fecha);
+        List<Contenido> found = contenidoService.buscarPorFechaFin(fechaBuscada);
 
         assertNotNull(found);
         assertEquals(1, found.size());
-        assertEquals("Conferencia", found.get(0).getNombre());
-        verify(contenidoRepository, times(1)).findByFechaFin(fecha);
+        assertEquals("Seminario Final", found.get(0).getNombre());
+        assertEquals(fechaBuscada, found.get(0).getFecha_fin());
+        verify(contenidoRepository, times(1)).findByFechaFin(fechaBuscada);
     }
 }
