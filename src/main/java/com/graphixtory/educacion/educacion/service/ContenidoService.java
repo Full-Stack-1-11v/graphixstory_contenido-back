@@ -5,12 +5,11 @@ import com.graphixtory.educacion.educacion.repository.ContenidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class ContenidoService {
 
     @Autowired
@@ -50,6 +49,7 @@ public class ContenidoService {
     public List<Contenido> buscarPorNivelEducativo(String nivelEducativo) {
         return repo.findByNivelEducativo(nivelEducativo);
     }
+
     public List<Contenido> buscarPorMateria(String materia) {
         return repo.findByMateria(materia);
     }
