@@ -30,10 +30,10 @@ public class ContenidoService {
     public Contenido actualizarContenido(Long id, Contenido nuevoContenido) {
         return repo.findById(id).map(contenidoExistente -> {
             contenidoExistente.setNombre(nuevoContenido.getNombre());
-            contenidoExistente.setNivel_educativo(nuevoContenido.getNivel_educativo());
+            contenidoExistente.setNivelEducativo(nuevoContenido.getNivelEducativo());
             contenidoExistente.setMateria(nuevoContenido.getMateria());
-            contenidoExistente.setFecha_inicio(nuevoContenido.getFecha_inicio());
-            contenidoExistente.setFecha_fin(nuevoContenido.getFecha_fin());
+            contenidoExistente.setFechaInicio(nuevoContenido.getFechaInicio());
+            contenidoExistente.setFechaFin(nuevoContenido.getFechaFin());
             return repo.save(contenidoExistente);
         }).orElse(null);
     }

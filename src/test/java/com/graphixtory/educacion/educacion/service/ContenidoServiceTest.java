@@ -92,7 +92,7 @@ public class ContenidoServiceTest {
 
         assertNotNull(result);
         assertEquals("Nuevo Nombre", result.getNombre());
-        assertEquals("Nuevo Nivel", result.getNivel_educativo());
+        assertEquals("Nuevo Nivel", result.getNivelEducativo());
         assertEquals("Nueva Materia", result.getMateria());
         verify(contenidoRepository, times(1)).findById(id);
         verify(contenidoRepository, times(1)).save(contenidoExistente);
@@ -122,7 +122,7 @@ public class ContenidoServiceTest {
 
         assertNotNull(found);
         assertEquals(1, found.size());
-        assertEquals(nivelBuscado, found.get(0).getNivel_educativo());
+        assertEquals(nivelBuscado, found.get(0).getNivelEducativo());
         verify(contenidoRepository, times(1)).findByNivelEducativo(nivelBuscado);
     }
 
@@ -151,7 +151,7 @@ public class ContenidoServiceTest {
         assertNotNull(found);
         assertEquals(1, found.size());
         assertEquals("Taller de Pruebas", found.get(0).getNombre());
-        assertEquals(fechaBuscada, found.get(0).getFecha_inicio());
+        assertEquals(fechaBuscada, found.get(0).getFechaInicio());
         verify(contenidoRepository, times(1)).findByFechaInicio(fechaBuscada);
     }
 
@@ -166,7 +166,7 @@ public class ContenidoServiceTest {
         assertNotNull(found);
         assertEquals(1, found.size());
         assertEquals("Seminario Final", found.get(0).getNombre());
-        assertEquals(fechaBuscada, found.get(0).getFecha_fin());
+        assertEquals(fechaBuscada, found.get(0).getFechaFin());
         verify(contenidoRepository, times(1)).findByFechaFin(fechaBuscada);
     }
 }

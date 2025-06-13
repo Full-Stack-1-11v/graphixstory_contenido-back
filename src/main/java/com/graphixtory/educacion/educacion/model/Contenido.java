@@ -1,6 +1,6 @@
 package com.graphixtory.educacion.educacion.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,37 +11,33 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Schema(description = "Representa un contenido educativo en el sistema")
 public class Contenido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(description = "Identificador único del contenido", example = "1")
     private Long id;
 
-    @Schema(description = "Nombre o título del contenido", example = "Introducción a la Programación")
     private String nombre;
 
-    @Schema(description = "Nivel educativo al que está dirigido el contenido (e.g., Primaria, Secundaria, Universidad)", example = "Universidad")
-    private String nivel_educativo;
+    @Column(name = "nivel_educativo", nullable = false)
+    private String nivelEducativo;
 
-    @Schema(description = "Materia o asignatura a la que pertenece el contenido (e.g., Matemáticas, Historia, Informática)", example = "Informática")
+    @Column (name = "materia", nullable = false)
     private String materia;
 
-    @Schema(description = "Fecha y hora de inicio de validez del contenido", example = "2024-01-01T09:00:00")
-    private LocalDateTime fecha_inicio;
+    @Column(name = "fecha_inicio", nullable = false)
+    private LocalDateTime fechaInicio;
 
-    @Schema(description = "Fecha y hora de fin de validez del contenido", example = "2024-12-31T23:59:59")
-    private LocalDateTime fecha_fin;
+    @Column(name = "fecha_fin", nullable = false)
+    private LocalDateTime fechaFin;
 
-    // Constructor para uso en tests (si usas @Data, Lombok genera uno, pero para List.of y mocks puede ser útil)
-    public Contenido(Long id, String nombre, String nivel_educativo, String materia, LocalDateTime fecha_inicio, LocalDateTime fecha_fin) {
+    public Contenido(Long id, String nombre, String nivelEducativo, String materia, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         this.id = id;
         this.nombre = nombre;
-        this.nivel_educativo = nivel_educativo;
+        this.nivelEducativo = nivelEducativo;
         this.materia = materia;
-        this.fecha_inicio = fecha_inicio;
-        this.fecha_fin = fecha_fin;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
 
     public Contenido() {
