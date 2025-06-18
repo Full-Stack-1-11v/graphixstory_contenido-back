@@ -87,8 +87,8 @@ public class ContenidoServiceTest {
         Contenido contenidoActualizado = new Contenido(id, "Nuevo Nombre", "Nuevo Nivel", "Nueva Materia", LocalDateTime.now(), LocalDateTime.now());
 
         when(contenidoRepository.existsById(id)).thenReturn(true);
-        when(contenidoRepository.findById(id)).thenReturn(Optional.of(contenidoExistente));
-        when(contenidoRepository.save(any(Contenido.class))).thenReturn(contenidoActualizado); // Modificado aquí
+        // Eliminado: when(contenidoRepository.findById(id)).thenReturn(Optional.of(contenidoExistente));
+        when(contenidoRepository.save(any(Contenido.class))).thenReturn(contenidoActualizado);
 
         Contenido result = contenidoService.actualizarContenido(id, contenidoActualizado);
 
@@ -96,8 +96,9 @@ public class ContenidoServiceTest {
         assertEquals("Nuevo Nombre", result.getNombre());
         assertEquals("Nuevo Nivel", result.getNivelEducativo());
         assertEquals("Nueva Materia", result.getMateria());
-        verify(contenidoRepository, times(1)).findById(id);
-        verify(contenidoRepository, times(1)).save(any(Contenido.class)); // Modificado aquí
+        // Eliminado: verify(contenidoRepository, times(1)).findById(id);
+        verify(contenidoRepository, times(1)).existsById(id); // Asegurado
+        verify(contenidoRepository, times(1)).save(any(Contenido.class)); // Modificado
     }
 
     @Test
