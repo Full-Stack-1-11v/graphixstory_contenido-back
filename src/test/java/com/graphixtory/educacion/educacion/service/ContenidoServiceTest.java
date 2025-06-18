@@ -4,6 +4,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any; // Importación necesaria
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,8 +86,9 @@ public class ContenidoServiceTest {
         Contenido contenidoExistente = new Contenido(id, "Antiguo Nombre", "Antiguo Nivel", "Antigua Materia", LocalDateTime.now().minusDays(1), LocalDateTime.now().minusDays(1));
         Contenido contenidoActualizado = new Contenido(id, "Nuevo Nombre", "Nuevo Nivel", "Nueva Materia", LocalDateTime.now(), LocalDateTime.now());
 
+        when(contenidoRepository.existsById(id)).thenReturn(true);
         when(contenidoRepository.findById(id)).thenReturn(Optional.of(contenidoExistente));
-        when(contenidoRepository.save(contenidoExistente)).thenReturn(contenidoActualizado);
+        when(contenidoRepository.save(any(Contenido.class))).thenReturn(contenidoActualizado); // Modificado aquí
 
         Contenido result = contenidoService.actualizarContenido(id, contenidoActualizado);
 
@@ -95,7 +97,7 @@ public class ContenidoServiceTest {
         assertEquals("Nuevo Nivel", result.getNivelEducativo());
         assertEquals("Nueva Materia", result.getMateria());
         verify(contenidoRepository, times(1)).findById(id);
-        verify(contenidoRepository, times(1)).save(contenidoExistente);
+        verify(contenidoRepository, times(1)).save(any(Contenido.class)); // Modificado aquí
     }
 
     @Test

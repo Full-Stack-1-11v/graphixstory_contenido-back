@@ -15,10 +15,6 @@ public class ContenidoService {
     @Autowired
     private ContenidoRepository repo;
 
-    public Contenido crearContenido(Contenido contenido){
-        return repo.save(contenido);
-    }
-
     public List<Contenido> listarContenidos(){
         return repo.findAll();
     }
@@ -27,19 +23,43 @@ public class ContenidoService {
         return repo.findById(id);
     }
 
-    public Contenido actualizarContenido(Long id, Contenido nuevoContenido) {
-        return repo.findById(id).map(contenidoExistente -> {
-            contenidoExistente.setNombre(nuevoContenido.getNombre());
-            contenidoExistente.setNivelEducativo(nuevoContenido.getNivelEducativo());
-            contenidoExistente.setMateria(nuevoContenido.getMateria());
-            contenidoExistente.setFechaInicio(nuevoContenido.getFechaInicio());
-            contenidoExistente.setFechaFin(nuevoContenido.getFechaFin());
-            return repo.save(contenidoExistente);
-        }).orElse(null);
+    public Contenido crearContenido(Contenido contenido){
+        return repo.save(contenido);
     }
 
     public void eliminarContenido(long id){
         repo.deleteById(id);
+    }
+
+    public Contenido actualizarContenido(Long id, Contenido nuevoContenido) {
+        if (repo.existsById(id)) {
+            nuevoContenido.setId(id);
+            return repo.save(nuevoContenido);
+        }
+        return null;
+    }
+
+    public Contenido patchContenido(Long id, Contenido cambiosParciales) {
+        Optional<Contenido> optionalContenido = repo.findById(id);
+
+        if (optionalContenido.isEmpty()) {
+            return null;
+        }
+
+        Contenido contenidoExistente = optionalContenido.get();
+
+        if (cambiosParciales.getNombre() != null)
+            contenidoExistente.setNombre(cambiosParciales.getNombre());
+        if (cambiosParciales.getNivelEducativo() != null)
+            contenidoExistente.setNivelEducativo(cambiosParciales.getNivelEducativo());
+        if (cambiosParciales.getMateria() != null)
+            contenidoExistente.setMateria(cambiosParciales.getMateria());
+        if (cambiosParciales.getFechaInicio() != null)
+            contenidoExistente.setFechaInicio(cambiosParciales.getFechaInicio());
+        if (cambiosParciales.getFechaFin() != null)
+            contenidoExistente.setFechaFin(cambiosParciales.getFechaFin());
+
+        return repo.save(contenidoExistente);
     }
 
     public List<Contenido> buscarPorNombre(String nombre) {

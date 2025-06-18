@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.graphixtory.educacion</groupId>
+    <groupId>com.graphixtory.educacion.educacion</groupId>
     <artifactId>educacion-back</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>GraphixStory Educacion Backend</name>
