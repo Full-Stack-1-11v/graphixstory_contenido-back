@@ -4,7 +4,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any; // Importación necesaria
+import static org.mockito.ArgumentMatchers.any;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +87,7 @@ public class ContenidoServiceTest {
         Contenido contenidoActualizado = new Contenido(id, "Nuevo Nombre", "Nuevo Nivel", "Nueva Materia", LocalDateTime.now(), LocalDateTime.now());
 
         when(contenidoRepository.existsById(id)).thenReturn(true);
-        // Eliminado: when(contenidoRepository.findById(id)).thenReturn(Optional.of(contenidoExistente));
+    
         when(contenidoRepository.save(any(Contenido.class))).thenReturn(contenidoActualizado);
 
         Contenido result = contenidoService.actualizarContenido(id, contenidoActualizado);
@@ -96,15 +96,15 @@ public class ContenidoServiceTest {
         assertEquals("Nuevo Nombre", result.getNombre());
         assertEquals("Nuevo Nivel", result.getNivelEducativo());
         assertEquals("Nueva Materia", result.getMateria());
-        // Eliminado: verify(contenidoRepository, times(1)).findById(id);
-        verify(contenidoRepository, times(1)).existsById(id); // Asegurado
-        verify(contenidoRepository, times(1)).save(any(Contenido.class)); // Modificado
+        
+        verify(contenidoRepository, times(1)).existsById(id);
+        verify(contenidoRepository, times(1)).save(any(Contenido.class));
     }
 
     @Test
     public void testBuscarPorNombre() {
-        String nombreBuscado = "Matemática Avanzada";
-        List<Contenido> contenidos = List.of(new Contenido(2L, "Matemática Avanzada", "Nivel Básico", "Álgebra", LocalDateTime.now(), LocalDateTime.now()));
+        String nombreBuscado = "Matemática Aplicada";
+        List<Contenido> contenidos = List.of(new Contenido(2L, "Matemática Aplicada", "Nivel Básico", "Python", LocalDateTime.now(), LocalDateTime.now()));
         when(contenidoRepository.findByNombre(nombreBuscado)).thenReturn(contenidos);
 
         List<Contenido> found = contenidoService.buscarPorNombre(nombreBuscado);
@@ -146,7 +146,7 @@ public class ContenidoServiceTest {
     @Test
     public void testBuscarPorFechaInicio() {
         LocalDateTime fechaBuscada = LocalDateTime.now().minusDays(5);
-        List<Contenido> contenidos = List.of(new Contenido(3L, "Taller de Pruebas", "Nivel Básico", "Software", fechaBuscada, fechaBuscada.plusDays(2)));
+        List<Contenido> contenidos = List.of(new Contenido(3L, "Ciencia Marina", "Nivel Básico", "Biología", fechaBuscada, fechaBuscada.plusDays(2)));
         when(contenidoRepository.findByFechaInicio(fechaBuscada)).thenReturn(contenidos);
 
         List<Contenido> found = contenidoService.buscarPorFechaInicio(fechaBuscada);
@@ -161,7 +161,7 @@ public class ContenidoServiceTest {
     @Test
     public void testBuscarPorFechaFin() {
         LocalDateTime fechaBuscada = LocalDateTime.now().plusDays(10);
-        List<Contenido> contenidos = List.of(new Contenido(4L, "Seminario Final", "Nivel Superior", "Investigación", fechaBuscada.minusDays(3), fechaBuscada));
+        List<Contenido> contenidos = List.of(new Contenido(4L, "Desarrollo Orientado a Objetos", "Nivel Superior", "Java", fechaBuscada.minusDays(3), fechaBuscada));
         when(contenidoRepository.findByFechaFin(fechaBuscada)).thenReturn(contenidos);
 
         List<Contenido> found = contenidoService.buscarPorFechaFin(fechaBuscada);
