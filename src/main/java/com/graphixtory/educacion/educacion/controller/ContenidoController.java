@@ -7,12 +7,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/contenidos")
@@ -28,15 +31,17 @@ public class ContenidoController {
         @ApiResponse(responseCode = "201", description = "Contenido creado"),
         @ApiResponse(responseCode = "400", description = "Solicitud inválida")
     })
-    public Contenido crear(@RequestBody Contenido c) {
-        return servicio.crearContenido(c);
+    public ResponseEntity<Contenido> crear(@RequestBody Contenido c) {
+        Contenido nuevoContenido = servicio.crearContenido(c);
+        return new ResponseEntity<>(nuevoContenido, HttpStatus.CREATED);
     }
 
     @GetMapping
     @Operation(summary = "Obtiene todos los contenidos", description = "Lista todos los contenidos")
     @ApiResponse(responseCode = "200", description = "Éxito")
-    public List<Contenido> listar() {
-        return servicio.listarContenidos();
+    public ResponseEntity<List<Contenido>> listar() {
+        List<Contenido> contenidos = servicio.listarContenidos();
+        return new ResponseEntity<>(contenidos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -45,8 +50,10 @@ public class ContenidoController {
         @ApiResponse(responseCode = "200", description = "Contenido encontrado"),
         @ApiResponse(responseCode = "404", description = "No encontrado")
     })
-    public Contenido obtener(@PathVariable Long id) {
-        return servicio.obtenerPorId(id).orElse(null);
+    public ResponseEntity<Contenido> obtener(@PathVariable Long id) {
+        Optional<Contenido> contenido = servicio.obtenerPorId(id);
+        return contenido.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
@@ -56,8 +63,13 @@ public class ContenidoController {
         @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
         @ApiResponse(responseCode = "404", description = "No encontrado")
     })
-    public Contenido actualizar(@PathVariable Long id, @RequestBody Contenido c) {
-        return servicio.actualizarContenido(id, c);
+    public ResponseEntity<Contenido> actualizar(@PathVariable Long id, @RequestBody Contenido c) {
+        Contenido contenidoActualizado = servicio.actualizarContenido(id, c);
+        if (contenidoActualizado != null) {
+            return new ResponseEntity<>(contenidoActualizado, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -66,29 +78,33 @@ public class ContenidoController {
         @ApiResponse(responseCode = "204", description = "Contenido eliminado"),
         @ApiResponse(responseCode = "404", description = "No encontrado")
     })
-    public void eliminar(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         servicio.eliminarContenido(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/buscar/nombre/{nombre}")
     @Operation(summary = "Busca por nombre", description = "Encuentra contenidos por nombre")
     @ApiResponse(responseCode = "200", description = "Éxito")
-    public List<Contenido> buscarPorNombre(@PathVariable String nombre) {
-        return servicio.buscarPorNombre(nombre);
+    public ResponseEntity<List<Contenido>> buscarPorNombre(@PathVariable String nombre) {
+        List<Contenido> contenidos = servicio.buscarPorNombre(nombre);
+        return new ResponseEntity<>(contenidos, HttpStatus.OK);
     }
 
     @GetMapping("/buscar/nivelEducativo/{nivelEducativo}")
     @Operation(summary = "Busca por nivel educativo", description = "Encuentra contenidos por nivel")
     @ApiResponse(responseCode = "200", description = "Éxito")
-    public List<Contenido> buscarPorNivelEducativo(@PathVariable String nivelEducativo) {
-        return servicio.buscarPorNivelEducativo(nivelEducativo);
+    public ResponseEntity<List<Contenido>> buscarPorNivelEducativo(@PathVariable String nivelEducativo) {
+        List<Contenido> contenidos = servicio.buscarPorNivelEducativo(nivelEducativo);
+        return new ResponseEntity<>(contenidos, HttpStatus.OK);
     }
 
     @GetMapping("/buscar/materia/{materia}")
     @Operation(summary = "Busca por materia", description = "Encuentra contenidos por materia")
     @ApiResponse(responseCode = "200", description = "Éxito")
-    public List<Contenido> buscarPorMateria(@PathVariable String materia) {
-        return servicio.buscarPorMateria(materia);
+    public ResponseEntity<List<Contenido>> buscarPorMateria(@PathVariable String materia) {
+        List<Contenido> contenidos = servicio.buscarPorMateria(materia);
+        return new ResponseEntity<>(contenidos, HttpStatus.OK);
     }
 
     @GetMapping("/buscar/fechaInicio/{fechaStr}")
@@ -97,13 +113,14 @@ public class ContenidoController {
         @ApiResponse(responseCode = "200", description = "Éxito"),
         @ApiResponse(responseCode = "400", description = "Fecha inválida")
     })
-    public List<Contenido> buscarPorFechaInicio(@PathVariable String fechaStr) {
+    public ResponseEntity<List<Contenido>> buscarPorFechaInicio(@PathVariable String fechaStr) {
         try {
             LocalDate fechaSolo = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
             LocalDateTime fecha = fechaSolo.atStartOfDay();
-            return servicio.buscarPorFechaInicio(fecha);
+            List<Contenido> contenidos = servicio.buscarPorFechaInicio(fecha);
+            return new ResponseEntity<>(contenidos, HttpStatus.OK);
         } catch (DateTimeParseException e) {
-            return List.of();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -113,13 +130,14 @@ public class ContenidoController {
         @ApiResponse(responseCode = "200", description = "Éxito"),
         @ApiResponse(responseCode = "400", description = "Fecha inválida")
     })
-    public List<Contenido> buscarPorFechaFin(@PathVariable String fechaStr) {
+    public ResponseEntity<List<Contenido>> buscarPorFechaFin(@PathVariable String fechaStr) {
         try {
             LocalDate fechaSolo = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
             LocalDateTime fecha = fechaSolo.atTime(23, 59, 59);
-            return servicio.buscarPorFechaFin(fecha);
+            List<Contenido> contenidos = servicio.buscarPorFechaFin(fecha);
+            return new ResponseEntity<>(contenidos, HttpStatus.OK);
         } catch (DateTimeParseException e) {
-            return List.of();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

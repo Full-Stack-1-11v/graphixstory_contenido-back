@@ -153,7 +153,7 @@ public class ContenidoServiceTest {
 
         assertNotNull(found);
         assertEquals(1, found.size());
-        assertEquals("Taller de Pruebas", found.get(0).getNombre());
+        assertEquals("Ciencia Marina", found.get(0).getNombre());
         assertEquals(fechaBuscada, found.get(0).getFechaInicio());
         verify(contenidoRepository, times(1)).findByFechaInicio(fechaBuscada);
     }
@@ -168,7 +168,7 @@ public class ContenidoServiceTest {
 
         assertNotNull(found);
         assertEquals(1, found.size());
-        assertEquals("Seminario Final", found.get(0).getNombre());
+        assertEquals("Desarrollo Orientado a Objetos", found.get(0).getNombre());
         assertEquals(fechaBuscada, found.get(0).getFechaFin());
         verify(contenidoRepository, times(1)).findByFechaFin(fechaBuscada);
     }

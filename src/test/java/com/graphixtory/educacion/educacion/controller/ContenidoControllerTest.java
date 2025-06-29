@@ -41,15 +41,15 @@ public class ContenidoControllerTest {
 
     @Test
     void crearContenido_debeRetornarContenidoCreado() throws Exception{
-        Contenido contenido = new Contenido();
-        contenido.setId(2L);
-        contenido.setNombre("Matemáticas Avanzadas");
-        contenido.setNivelEducativo("Superior");
-        contenido.setMateria("Algebra");
-        contenido.setFechaInicio(LocalDateTime.of(2025, 7, 1, 0, 0));
-        contenido.setFechaFin(LocalDateTime.of(2025, 12, 31, 23, 59,59));
+        Contenido contenidoMock = new Contenido();
+        contenidoMock.setId(2L);
+        contenidoMock.setNombre("Matemáticas Aplicada");
+        contenidoMock.setNivelEducativo("Superior");
+        contenidoMock.setMateria("Python");
+        contenidoMock.setFechaInicio(LocalDateTime.of(2025, 1, 10, 9, 0));
+        contenidoMock.setFechaFin(LocalDateTime.of(2025, 12, 15, 18, 0));
 
-        Mockito.when(contenidoService.crearContenido(any(Contenido.class))).thenReturn(contenido);
+        Mockito.when(contenidoService.crearContenido(any(Contenido.class))).thenReturn(contenidoMock);
 
         mockMvc.perform(post("/api/contenidos")
         .contentType(MediaType.APPLICATION_JSON)
@@ -139,7 +139,7 @@ public class ContenidoControllerTest {
 
     @Test
     void buscarPorNombre_debeRetornarListaFiltrada() throws Exception{
-         Contenido c1 = new Contenido();
+           Contenido c1 = new Contenido();
         c1.setId(1L);
         c1.setNombre("Desarrollo Web");
         Contenido c2 = new Contenido();
@@ -152,6 +152,12 @@ public class ContenidoControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0].nombre", is("Desarrollo Web")));
+    }
+
+    @Test
+    void buscarPorFechaInicio_fechaInvalidaDebeRetornarBadRequest() throws Exception {
+        mockMvc.perform(get("/api/contenidos/buscar/fechaInicio/fecha-invalida"))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -169,13 +175,6 @@ public class ContenidoControllerTest {
                 .andExpect(jsonPath("$[0].nombre", is("Base de Datos")));
     }
 
-    @Test
-    void buscarPorFechaInicio_fechaInvalidaDebeRetornarVacio() throws Exception {
-        
-        mockMvc.perform(get("/api/contenidos/buscar/fechaInicio/fecha-invalida"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
-    }
 
     @Test
     void buscarPorFechaFin_debeRetornarListaFiltrada() throws Exception {
@@ -191,13 +190,11 @@ public class ContenidoControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].nombre", is("Biología Marina")));
-}
+    }
 
     @Test
-    void buscarPorFechaFin_fechaInvalidaDebeRetornarVacio() throws Exception {
-
+    void buscarPorFechaFin_fechaInvalidaDebeRetornarBadRequest() throws Exception {
         mockMvc.perform(get("/api/contenidos/buscar/fechaFin/invalid-date"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(status().isBadRequest());
     }
 }
