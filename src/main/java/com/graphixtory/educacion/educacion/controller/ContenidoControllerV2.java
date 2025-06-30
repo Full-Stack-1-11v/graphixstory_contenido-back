@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,11 +38,15 @@ public class ContenidoControllerV2 {
     private ContenidoModelAssembler assembler;
 
     @GetMapping
-    public ResponseEntity<List<EntityModel<Contenido>>> listar() {
+    public ResponseEntity<CollectionModel<EntityModel<Contenido>>> listar() {
         List<EntityModel<Contenido>> contenidos = servicio.listarContenidos().stream()
                 .map(assembler::toModel)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(contenidos);
+
+        CollectionModel<EntityModel<Contenido>> collectionModel = CollectionModel.of(contenidos,
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ContenidoControllerV2.class).listar()).withSelfRel());
+
+        return ResponseEntity.ok(collectionModel);
     }
 
     @GetMapping("/{id}")
@@ -88,34 +94,55 @@ public class ContenidoControllerV2 {
     }
 
     @GetMapping("/buscar/nombre/{nombre}")
-    public ResponseEntity<List<Contenido>> buscarPorNombre(@PathVariable String nombre) {
+    public ResponseEntity<CollectionModel<EntityModel<Contenido>>> buscarPorNombre(@PathVariable String nombre) {
         List<Contenido> contenidos = servicio.buscarPorNombre(nombre);
         if (contenidos.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(contenidos);
+        List<EntityModel<Contenido>> contenidoModels = contenidos.stream()
+                .map(assembler::toModel)
+                .collect(Collectors.toList());
+
+        CollectionModel<EntityModel<Contenido>> collectionModel = CollectionModel.of(contenidoModels,
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ContenidoControllerV2.class).buscarPorNombre(nombre)).withSelfRel());
+
+        return ResponseEntity.ok(collectionModel);
     }
 
     @GetMapping("/buscar/nivelEducativo/{nivelEducativo}")
-    public ResponseEntity<List<Contenido>> buscarPorNivelEducativo(@PathVariable String nivelEducativo) {
+    public ResponseEntity<CollectionModel<EntityModel<Contenido>>> buscarPorNivelEducativo(@PathVariable String nivelEducativo) {
         List<Contenido> contenidos = servicio.buscarPorNivelEducativo(nivelEducativo);
         if (contenidos.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(contenidos);
+        List<EntityModel<Contenido>> contenidoModels = contenidos.stream()
+                .map(assembler::toModel)
+                .collect(Collectors.toList());
+
+        CollectionModel<EntityModel<Contenido>> collectionModel = CollectionModel.of(contenidoModels,
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ContenidoControllerV2.class).buscarPorNivelEducativo(nivelEducativo)).withSelfRel());
+
+        return ResponseEntity.ok(collectionModel);
     }
 
     @GetMapping("/buscar/materia/{materia}")
-    public ResponseEntity<List<Contenido>> buscarPorMateria(@PathVariable String materia) {
+    public ResponseEntity<CollectionModel<EntityModel<Contenido>>> buscarPorMateria(@PathVariable String materia) {
         List<Contenido> contenidos = servicio.buscarPorMateria(materia);
         if (contenidos.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(contenidos);
+        List<EntityModel<Contenido>> contenidoModels = contenidos.stream()
+                .map(assembler::toModel)
+                .collect(Collectors.toList());
+
+        CollectionModel<EntityModel<Contenido>> collectionModel = CollectionModel.of(contenidoModels,
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ContenidoControllerV2.class).buscarPorMateria(materia)).withSelfRel());
+
+        return ResponseEntity.ok(collectionModel);
     }
 
     @GetMapping("/buscar/fechaInicio/{fechaStr}")
-    public ResponseEntity<List<Contenido>> buscarPorFechaInicio(@PathVariable String fechaStr) {
+    public ResponseEntity<CollectionModel<EntityModel<Contenido>>> buscarPorFechaInicio(@PathVariable String fechaStr) {
         try {
             LocalDate fechaSolo = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
             LocalDateTime fecha = fechaSolo.atStartOfDay();
@@ -123,14 +150,21 @@ public class ContenidoControllerV2 {
             if (contenidos.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
-            return ResponseEntity.ok(contenidos);
+            List<EntityModel<Contenido>> contenidoModels = contenidos.stream()
+                    .map(assembler::toModel)
+                    .collect(Collectors.toList());
+
+            CollectionModel<EntityModel<Contenido>> collectionModel = CollectionModel.of(contenidoModels,
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ContenidoControllerV2.class).buscarPorFechaInicio(fechaStr)).withSelfRel());
+
+            return ResponseEntity.ok(collectionModel);
         } catch (DateTimeParseException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @GetMapping("/buscar/fechaFin/{fechaStr}")
-    public ResponseEntity<List<Contenido>> buscarPorFechaFin(@PathVariable String fechaStr) {
+    public ResponseEntity<CollectionModel<EntityModel<Contenido>>> buscarPorFechaFin(@PathVariable String fechaStr) {
         try {
             LocalDate fechaSolo = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
             LocalDateTime fecha = fechaSolo.atTime(23, 59, 59);
@@ -138,7 +172,14 @@ public class ContenidoControllerV2 {
             if (contenidos.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
-            return ResponseEntity.ok(contenidos);
+            List<EntityModel<Contenido>> contenidoModels = contenidos.stream()
+                    .map(assembler::toModel)
+                    .collect(Collectors.toList());
+
+            CollectionModel<EntityModel<Contenido>> collectionModel = CollectionModel.of(contenidoModels,
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ContenidoControllerV2.class).buscarPorFechaFin(fechaStr)).withSelfRel());
+
+            return ResponseEntity.ok(collectionModel);
         } catch (DateTimeParseException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
